@@ -86,7 +86,7 @@ function Faq() {
                     FAQ
                 </Heading>
             </Box>
-            <Container maxW="container.xl" mt={15}>
+            <Container maxW="container.xl" my={20}>
                 {questions.map(value => <Question {...value} />)}
             </Container>
         </>
