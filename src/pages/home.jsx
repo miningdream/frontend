@@ -332,6 +332,7 @@ function Home() {
                                     transition="all 0.2s"
                                     _hover={{ color: "#c9c4c4" }}
                                     _active={{ color: "#afaaaa" }}
+                                    onClick={() => window.open(`mailto:miningdreamgroup@gmail.com?subject=I Need Consultation`)}
                                 >
                                     <Text>
                                         {
