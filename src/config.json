@@ -1,5 +1,5 @@
 {
-    "domain": "http://localhost:3001",
+    "domain": "https://smartminers.glitchtrapbot.xyz/",
     "profile": {
         "navItems": ["data-profile", "settings", "courses"]
     }
