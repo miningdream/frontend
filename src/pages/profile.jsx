@@ -57,34 +57,6 @@ function SideBar({ value, onChange, language }) {
                     my="10px"
                     aria-label={
                         language === "en"
-                        ? "My Courses"
-                        : language === "id"
-                        ? "Kursus Saya"
-                        : "My Courses"
-                    }
-                    fontSize={[null, null, "13px", "15px"]}
-                    color={value === "courses" ? "black" : "white"}
-                    bgColor={value === "courses" ? "white" : null}
-                    transition="all 0.2s"
-                    fontWeight="bold"
-                    cursor="pointer"
-                    _hover={value !== "courses" ? { bgColor: "white", color: "black" } : null}
-                    p="20px"
-                    w="100%"
-                    onClick={() => handleNavigation("courses")}
-                >
-                    {
-                        language === "en"
-                        ? "My Courses"
-                        : language === "id"
-                        ? "Kursus Saya"
-                        : "My Courses"
-                    }
-                </Box>
-                <Box
-                    my="10px"
-                    aria-label={
-                        language === "en"
                         ? "Settings"
                         : language === "id"
                         ? "Pengaturan"

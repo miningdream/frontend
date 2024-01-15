@@ -68,3 +68,4 @@ export async function setUserNotification(body) {
 
 export { getNews } from "./news";
 export { sendEmail, sendVerifiedEmail } from "./email";
+export { getCourses, findCourses } from "./courses";

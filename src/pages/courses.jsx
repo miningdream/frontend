@@ -1,6 +1,6 @@
-import { getUser } from "../api";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
+import { getUser, getCourses, findCourses } from "../api";
 import { Search, Star, StarFill } from "react-bootstrap-icons";
 import {
     Accordion,
@@ -25,6 +25,7 @@ import {
     WrapItem
 } from "@chakra-ui/react";
 
+import config from "../config.json";
 import Navbar from "../partials/navbar";
 import banner_dark from "../images/banner_dark.jpg";
 
@@ -32,7 +33,7 @@ function Courses() {
 
     let [user, setUser] = useState(null);
     let [language, setLanguage] = useState("en");
-    let [loading, setLoading] = useState(false);
+    let [courses, setCourses] = useState([]);
     let [query, setQuery] = useState("");
 
     // Filter 
@@ -57,12 +58,24 @@ function Courses() {
         if(lang) setLanguage(lang);
 
         let response = null;
+        let response_courses = null;
         try {
             response = await getUser();
+            response_courses = await getCourses();
         } catch (error) {
             console.log(error);
         }
+        setCourses(response_courses);
         setUser(response && response.user);
+    }
+
+    const search = async() => {
+        try {
+            let response = await findCourses(query);
+            setCourses(response);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     useEffect(() => {
@@ -97,7 +110,7 @@ function Courses() {
                     display={["none", "none", "inline", "inline"]}
                 >
                     <InputGroup>
-                        <InputLeftElement cursor="pointer">
+                        <InputLeftElement cursor="pointer" onClick={search}>
                             <Search />
                         </InputLeftElement>
                         <Input
@@ -163,7 +176,7 @@ function Courses() {
                     display={["inline", "inline", "none", "none"]}
                 >
                     <Accordion allowToggle={true}>
-                        <AccordionItem>
+                        <AccordionItem border="none">
                             <h2>
                                 <AccordionButton>
                                     <InputGroup>
@@ -246,55 +259,63 @@ function Courses() {
                     w={["100%", "100%", "75%", "75%"]}
                 >
                     <Container maxW="container.2xl">
-                        <Box
-                            cursor="pointer"
-                            border="solid #606060 0.2px"
-                            borderRadius="5px"
-                            p={8}
-                        >
-                            <Flex
-                                align="center"
-                                display={["none", "none", "flex", "flex"]}
-                            >
-                                <Img
-                                    h="87px"
-                                    w="172px"
+                        {
+                            courses.map((value, index) =>
+                                <Box
+                                    key={index}
+                                    cursor="pointer"
+                                    border="solid #606060 0.2px"
                                     borderRadius="5px"
-                                    src="https://ccweb.imgix.net/https%3A%2F%2Fwww.classcentral.com%2Fimages%2Fcollections%2Fcollection-ivy-league-moocs-social.jpg?ar=16%3A9&auto=format&cs=strip&fit=crop&h=256&ixlib=php-4.1.0&w=454&s=42491aff0148bb0d046219d55469fc44"
-                                    alt="banner"
-                                />
-                                <Heading as="h5" ml={5}>
-                                    Course Title
-                                </Heading>
-                            </Flex>
-                            <Wrap display={["flex", "flex", "none", "none"]}>
-                                <WrapItem
-                                    w="100%"
-                                    display="flex"
-                                    justifyContent="center"
-                                    alignItems="center"
+                                    onClick={() => window.open(value.source.url, "_blank")}
+                                    p={8}
                                 >
-                                    <Img
-                                        h="87px"
-                                        w="172px"
-                                        borderRadius="5px"
-                                        src="https://ccweb.imgix.net/https%3A%2F%2Fwww.classcentral.com%2Fimages%2Fcollections%2Fcollection-ivy-league-moocs-social.jpg?ar=16%3A9&auto=format&cs=strip&fit=crop&h=256&ixlib=php-4.1.0&w=454&s=42491aff0148bb0d046219d55469fc44"
-                                        alt="banner"
-                                    />
-                                </WrapItem>
-                                <WrapItem w="100%">
-                                    <Heading as="h5" ml={5} w="100%" textAlign="center">
-                                        Course Title
-                                    </Heading>
-                                </WrapItem>
-                            </Wrap>
-                            <Text mt={5}>
-                                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vel nemo aliquid error, tempora ipsam dolore alias eius quod quo, reprehenderit temporibus necessitatibus repellat laboriosam recusandae eos praesentium ut accusamus labore?
-                            </Text>
-                            <Text mt={10} color="#898989">
-                                Free
-                            </Text>
-                        </Box>
+                                    <Flex
+                                        align="center"
+                                        display={["none", "none", "flex", "flex"]}
+                                    >
+                                        <Img
+                                            h="87px"
+                                            w="172px"
+                                            borderRadius="5px"
+                                            src={`${config.domain}${value.banner.url}`}
+                                            alt="banner"
+                                        />
+                                        <Heading as="h5" ml={5}>
+                                            {
+                                                value.title.length > 57
+                                                ? value.title.substring(0, 60) + "..."
+                                                : value.title
+                                            }
+                                        </Heading>
+                                    </Flex>
+                                    <Wrap display={["flex", "flex", "none", "none"]}>
+                                        <WrapItem
+                                            w="100%"
+                                            display="flex"
+                                            justifyContent="center"
+                                            alignItems="center"
+                                        >
+                                            <Img
+                                                h="87px"
+                                                w="172px"
+                                                borderRadius="5px"
+                                                src="https://ccweb.imgix.net/https%3A%2F%2Fwww.classcentral.com%2Fimages%2Fcollections%2Fcollection-ivy-league-moocs-social.jpg?ar=16%3A9&auto=format&cs=strip&fit=crop&h=256&ixlib=php-4.1.0&w=454&s=42491aff0148bb0d046219d55469fc44"
+                                                alt="banner"
+                                            />
+                                        </WrapItem>
+                                        <WrapItem w="100%">
+                                            <Heading as="h5" ml={5} w="100%" textAlign="center">
+                                                Course Title
+                                            </Heading>
+                                        </WrapItem>
+                                    </Wrap>
+                                    <Text mt={5}>{value.description}</Text>
+                                    <Text mt={10} color="#898989">
+                                        {value.price === 0 ? "Free" : `$${value.price}.00`}
+                                    </Text>
+                                </Box>
+                            )
+                        }
                     </Container>
                 </Box>
             </Flex>

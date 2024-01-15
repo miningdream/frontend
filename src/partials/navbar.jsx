@@ -13,7 +13,7 @@ import {
     MenuItem
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
-import { PersonCircle, Cart2, Heart } from "react-bootstrap-icons";
+import { PersonCircle } from "react-bootstrap-icons";
 import nav_icon from "../images/nav_icon.png";
 
 function Navbar({ user, lang }) {
@@ -121,43 +121,31 @@ function Navbar({ user, lang }) {
                     {
                         user
                         ? (
-                            <>
-                                <IconButton
-                                    variant="ghost"
-                                    aria-label="likes"
-                                    isRound={true}
-                                    size="lg"
-                                    mr={2}
-                                    icon={
-                                        <Icon as={Heart} />
-                                    }
-                                />
-                                <Menu>
-                                    <MenuButton as={Button}>
-                                        <Icon as={PersonCircle} />
-                                    </MenuButton>
-                                    <MenuList>
-                                        <MenuItem onClick={() => handleTarget("profile")}>
-                                            {
-                                                lang === "en"
-                                                ? "Settings"
-                                                : lang === "id"
-                                                ? "Pengaturan"
-                                                : "Settings"
-                                            }
-                                        </MenuItem>
-                                        <MenuItem onClick={handleLogOut}>
-                                            {
-                                                lang === "en"
-                                                ? "Log Out"
-                                                : lang === "id"
-                                                ? "Keluar"
-                                                : "Log Out"
-                                            }
-                                        </MenuItem>
-                                    </MenuList>
-                                </Menu>
-                            </>
+                            <Menu>
+                                <MenuButton as={Button}>
+                                    <Icon as={PersonCircle} />
+                                </MenuButton>
+                                <MenuList>
+                                    <MenuItem onClick={() => handleTarget("profile")}>
+                                        {
+                                            lang === "en"
+                                            ? "Settings"
+                                            : lang === "id"
+                                            ? "Pengaturan"
+                                            : "Settings"
+                                        }
+                                    </MenuItem>
+                                    <MenuItem onClick={handleLogOut}>
+                                        {
+                                            lang === "en"
+                                            ? "Log Out"
+                                            : lang === "id"
+                                            ? "Keluar"
+                                            : "Log Out"
+                                        }
+                                    </MenuItem>
+                                </MenuList>
+                            </Menu>
                         )
                         : (
                             <>
@@ -336,53 +324,31 @@ function Navbar({ user, lang }) {
                     {
                         user
                         ? (
-                            <>
-                                <IconButton
-                                    variant="ghost"
-                                    aria-label="likes"
-                                    isRound={true}
-                                    size="lg"
-                                    mr={2}
-                                    icon={
-                                        <Icon as={Heart} />
-                                    }
-                                />
-                                <IconButton
-                                    variant="ghost"
-                                    aria-label="shop"
-                                    isRound={true}
-                                    size="lg"
-                                    mr={2}
-                                    icon={
-                                        <Icon as={Cart2} />
-                                    }
-                                />
-                                <Menu>
-                                    <MenuButton as={Button}>
-                                        <Icon as={PersonCircle} />
-                                    </MenuButton>
-                                    <MenuList>
-                                        <MenuItem onClick={() => handleTarget("profile")}>
-                                            {
-                                                lang === "en"
-                                                ? "Settings"
-                                                : lang === "id"
-                                                ? "Pengaturan"
-                                                : "Settings"
-                                            }
-                                        </MenuItem>
-                                        <MenuItem onClick={handleLogOut}>
-                                            {
-                                                lang === "en"
-                                                ? "Log Out"
-                                                : lang === "id"
-                                                ? "Keluar"
-                                                : "Log Out"
-                                            }
-                                        </MenuItem>
-                                    </MenuList>
-                                </Menu>
-                            </>
+                            <Menu>
+                                <MenuButton as={Button}>
+                                    <Icon as={PersonCircle} />
+                                </MenuButton>
+                                <MenuList>
+                                    <MenuItem onClick={() => handleTarget("profile")}>
+                                        {
+                                            lang === "en"
+                                            ? "Settings"
+                                            : lang === "id"
+                                            ? "Pengaturan"
+                                            : "Settings"
+                                        }
+                                    </MenuItem>
+                                    <MenuItem onClick={handleLogOut}>
+                                        {
+                                            lang === "en"
+                                            ? "Log Out"
+                                            : lang === "id"
+                                            ? "Keluar"
+                                            : "Log Out"
+                                        }
+                                    </MenuItem>
+                                </MenuList>
+                            </Menu>
                         )
                         : (
                             <>
